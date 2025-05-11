@@ -1,0 +1,12 @@
+{
+  "name": "disposable-mail-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "axios": "latest",
+    "express": "latest"
+  }
+}
