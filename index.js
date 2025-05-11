@@ -122,4 +122,36 @@ app.get('/chkmail', async (req, res) => {
   }
 });
 
+app.get('/', (req, res) => {
+  res.setHeader('Content-Type', 'text/html');
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>Disposable Mail API</title>
+      <style>
+        body { font-family: Arial, sans-serif; background: #f9f9f9; color: #333; padding: 2rem; }
+        h1 { color: #444; }
+        code { background: #eee; padding: 2px 6px; border-radius: 4px; }
+        ul { line-height: 1.8; }
+      </style>
+    </head>
+    <body>
+      <h1>Disposable Mail API</h1>
+      <p>This API allows you to generate disposable email addresses and check their inbox.</p>
+      <h3>Endpoints:</h3>
+      <ul>
+        <li><strong>GET <code>/getmail</code></strong> – Generate a random email address</li>
+        <li><strong>GET <code>/getmail?name=yourname</code></strong> – Generate a custom email if available</li>
+        <li><strong>GET <code>/chkmail?mail=encoded_mail</code></strong> – Check inbox for received messages</li>
+      </ul>
+      <h4>Example:</h4>
+      <pre><code>/getmail?name=sounyaa00</code></pre>
+    </body>
+    </html>
+  `);
+});
+
 module.exports = app;
