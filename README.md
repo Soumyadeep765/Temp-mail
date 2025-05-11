@@ -75,8 +75,3 @@ This project is ready to deploy on [Vercel](https://vercel.com/).
 
 This setup ensures that all routes (`/getmail`, `/chkmail`, etc.) are handled by the Express server.
 
----
-
-## License
-
-MIT
