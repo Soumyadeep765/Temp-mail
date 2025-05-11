@@ -9,6 +9,8 @@ A Node.js Express API that integrates with [disposablemail.com](https://www.disp
 - Check email inbox messages (`/chkmail?mail=your_encoded_email`)
 - Fully serverless and deployable on **Vercel**
 
+## Base URL : **In my case base url is ** - `https://temp-mail-peach.vercel.app`
+
 ## Endpoints
 
 ### `GET /getmail`
