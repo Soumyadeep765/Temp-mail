@@ -44,13 +44,6 @@ Returns JSON inbox data from DisposableMail.
 
 This project is ready to deploy on [Vercel](https://vercel.com/).
 
-### Folder Structure
-```
-api/
-  └── index.js      # Express API server
-vercel.json          # Vercel config
-package.json         # Dependencies
-```
 
 ### Deploy Steps
 
@@ -67,14 +60,14 @@ package.json         # Dependencies
   "version": 2,
   "builds": [
     {
-      "src": "api/index.js",
+      "src": "/index.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/api/index.js"
+      "dest": "/index.js"
     }
   ]
 }
