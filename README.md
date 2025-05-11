@@ -10,7 +10,7 @@ A Node.js Express API that integrates with [disposablemail.com](https://www.disp
 - Fully serverless and deployable on **Vercel**
 
 ## Base URL : 
-**In my case base url is ** - `https://temp-mail-peach.vercel.app`
+**In my case base url is** - `https://temp-mail-peach.vercel.app`
 
 ## Endpoints
 
