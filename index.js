@@ -76,8 +76,8 @@ async function getDefaultMail() {
 
   return {
     email: inboxRes.data?.email || null,
-    password: inboxRes.data?.heslo || null,
-    session: phpsessid.replace('PHPSESSID=', '')
+    password: inboxRes.data?.heslo || null, // No idea about the pass uses 🙂
+    //session: phpsessid.replace('PHPSESSID=', '') //No need it currently it's PHP session id only 
   };
 }
 
