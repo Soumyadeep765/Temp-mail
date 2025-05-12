@@ -7,6 +7,7 @@ A Node.js Express API that integrates with [disposablemail.com](https://www.disp
 - Generate random disposable emails (`/getmail`)
 - Generate custom emails by passing `name` query (`/getmail?name=yourname`)
 - Check email inbox messages (`/chkmail?mail=your_encoded_email`)
+- Delete email by `mail` and email `id` (`/delete?mail=testSoumya@xxx.xxx&id=1`)
 - Fully serverless and deployable on **Vercel**
 
 ## Base URL : 
@@ -42,6 +43,15 @@ Checks inbox for a generated email.
 Returns JSON inbox data from DisposableMail.
 
 ---
+### `GET /delete`
+
+Delete a inboxed email for a specific mail.
+
+#### Required Query Parameters:
+- `mail`: Email name encoded (e.g., `soumyatest%40deliverydaily.org`)
+- `id` : email id (e.g., `1`)
+
+return success or failed response.
 
 ## Deployment
 
