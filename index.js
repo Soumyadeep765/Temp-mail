@@ -82,7 +82,7 @@ async function getDefaultMail() {
 
   return {
     email: inboxRes.data?.email || null,
-    password: inboxRes.data?.heslo || null, // Password if needed
+    password: inboxRes.data?.heslo || null, // Password if needed , have no idea how to use pass 🙂
   };
 }
 
@@ -185,7 +185,7 @@ app.get('/', (req, res) => {
         <li><strong>GET <code>/delete?mail=encoded_mail&id=msgid</code></strong> – Delete a specific mail by ID</li>
       </ul>
       <h4>Example:</h4>
-      <pre><code>/getmail?name=sounyaa00</code></pre>
+      <pre><code>/getmail?name=soumyaTest</code></pre>
     </body>
     </html>
   `);
