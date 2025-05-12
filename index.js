@@ -1,10 +1,17 @@
 //index.js
+/*
+Temp mail api using https://www.disposablemail.com
+credit : https://github.com/Soumyadeep765
+Repo : https://github.com/Soumyadeep765/Temp-mail/
+*/
+
 const express = require('express');
 const axios = require('axios');
 const app = express();
 
 app.use(express.json());
 
+// For custom mail create (if name given)
 async function getCustomMail(name) {
   const checkRes = await axios.post(
     'https://www.disposablemail.com/index/email-check/',
@@ -20,9 +27,7 @@ async function getCustomMail(name) {
     }
   );
 
-  if (checkRes.data !== 'ok') {
-    return null;
-  }
+  if (checkRes.data !== 'ok') return null;
 
   const createRes = await axios.post(
     'https://www.disposablemail.com/index/new-email/',
@@ -44,6 +49,7 @@ async function getCustomMail(name) {
   return { email, session: cookie };
 }
 
+// For default mail (if no name given)
 async function getDefaultMail() {
   const homeRes = await axios.get('https://www.disposablemail.com', {
     headers: {
@@ -76,11 +82,11 @@ async function getDefaultMail() {
 
   return {
     email: inboxRes.data?.email || null,
-    password: inboxRes.data?.heslo || null, // No idea about the pass uses 🙂
-    //session: phpsessid.replace('PHPSESSID=', '') //No need it currently it's PHP session id only 
+    password: inboxRes.data?.heslo || null, // Password if needed
   };
 }
 
+// create mail route
 app.get('/getmail', async (req, res) => {
   try {
     const name = req.query.name;
@@ -97,6 +103,7 @@ app.get('/getmail', async (req, res) => {
   }
 });
 
+// check inbox route
 app.get('/chkmail', async (req, res) => {
   const mail = req.query.mail;
   if (!mail) return res.status(400).send('Missing mail query parameter');
@@ -111,7 +118,7 @@ app.get('/chkmail', async (req, res) => {
         'sec-ch-ua': '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
         'sec-fetch-site': 'same-origin',
         'referer': 'https://www.disposablemail.com/',
-        'accept-language': 'en-US,en;q=0.9,bn;q=0.8,ru;q=0.7,zh-CN;q=0.6,zh;q=0.5,hi;q=0.4,la;q=0.3',
+        'accept-language': 'en-US,en;q=0.9',
         'Cookie': `TMA=${encodeURIComponent(mail)}`
       }
     });
@@ -122,6 +129,35 @@ app.get('/chkmail', async (req, res) => {
   }
 });
 
+// delete mail route
+app.get('/delete', async (req, res) => {
+  const { mail, id } = req.query;
+  if (!mail || !id) return res.status(400).send('Missing mail or id');
+
+  try {
+    const delRes = await axios.post(`https://www.disposablemail.com/delete-email/${id}`,
+      new URLSearchParams({ id }),
+      {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36',
+          'Accept': 'application/json, text/javascript, */*; q=0.01',
+          'Accept-Encoding': 'gzip, deflate, br, zstd',
+          'sec-ch-ua-platform': '"Android"',
+          'sec-ch-ua-mobile': '?1',
+          'x-requested-with': 'XMLHttpRequest',
+          'sec-fetch-mode': 'cors',
+          'Cookie': `TMA=${encodeURIComponent(mail)}`
+        }
+      }
+    );
+
+    res.send(delRes.data);
+  } catch {
+    res.status(500).send('Failed to delete mail');
+  }
+});
+
+// welcome info page
 app.get('/', (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.send(`
@@ -146,6 +182,7 @@ app.get('/', (req, res) => {
         <li><strong>GET <code>/getmail</code></strong> – Generate a random email address</li>
         <li><strong>GET <code>/getmail?name=yourname</code></strong> – Generate a custom email if available</li>
         <li><strong>GET <code>/chkmail?mail=encoded_mail</code></strong> – Check inbox for received messages</li>
+        <li><strong>GET <code>/delete?mail=encoded_mail&id=msgid</code></strong> – Delete a specific mail by ID</li>
       </ul>
       <h4>Example:</h4>
       <pre><code>/getmail?name=sounyaa00</code></pre>
